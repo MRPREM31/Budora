@@ -26,3 +26,7 @@ venv/
 
 # Reference dumps of other apps must never be committed
 reference-dumps/
+
+# Distribution packages
+release/
+dist/
