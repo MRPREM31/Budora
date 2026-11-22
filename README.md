@@ -1,7 +1,7 @@
 # Budora 🎧
 
 <p align="center">
-  <img src="windows/icon.ico" width="80" height="80" alt="Budora Logo" /><br>
+  <img src="windows/custom_logo.png" width="92" height="92" alt="Budora Logo" /><br>
   <strong>Universal Bluetooth Battery Telemetry & Media Companion for Windows & Android</strong><br>
   <em>Engineered with precision by <strong>Prem Prasad Pradhan — a Zenemoo Software</strong></em>
 </p>
@@ -33,18 +33,33 @@ Built for speed, pixel-perfect elegance, and zero background battery drain:
 
 ## 📸 Visual Showcase
 
-### 📱 Real Android Mobile App & Live Debugging
-Captured directly from an active Android device paired with **CMF Buds 2a**:
+### 📱 Real Android Mobile App (Live Telemetry & System Integration)
+*Captured directly from a live Android device paired with **CMF Buds 2a**:*
 
-<p align="center">
-  <img src="docs/assets/screenshots/android_app.png" width="380" alt="Budora Android Live Mobile Capture" />
-  <br>
-  <em>Live Android telemetry: Real-time dual-pod battery gauges, case memory, connect drawer controls, and status bar notification alerts.</em>
-</p>
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <strong>🔋 Main Battery Readout</strong><br><br>
+      <img src="docs/assets/screenshots/android_app.png" width="100%" alt="Budora Android Live Battery Readout" /><br>
+      <em>Dual-pod battery rings, case memory (~70%), and live media playback.</em>
+    </td>
+    <td align="center" width="33%">
+      <strong>⚡ Floating Connect Flyout</strong><br><br>
+      <img src="docs/assets/screenshots/android_popup.png" width="100%" alt="Budora Android Connect Drawer" /><br>
+      <em>Lockscreen-aware edge drawer that slides in on Bluetooth connection.</em>
+    </td>
+    <td align="center" width="33%">
+      <strong>⚙️ Settings & Customization</strong><br><br>
+      <img src="docs/assets/screenshots/android_settings.png" width="100%" alt="Budora Android Settings Screen" /><br>
+      <em>Themes (Ocean, Sunset, Forest), auto-dismiss timers & battery alert thresholds.</em>
+    </td>
+  </tr>
+</table>
 
 ---
 
 ### 💻 Windows 11 Desktop Experience
+*Native PySide6 desktop suite with official Budora squircle emblem & rev-up speedometer telemetry:*
 
 <table>
   <tr>
