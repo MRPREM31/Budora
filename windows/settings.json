@@ -1,0 +1,15 @@
+{
+  "colorTheme": "Grape",
+  "darkMode": "dark",
+  "logoShape": "round",
+  "showConnectPopup": true,
+  "popupPosition": "bottom",
+  "autoDismissPopup": true,
+  "popupTimeoutSeconds": 8,
+  "resumeMusicOnConnect": false,
+  "launchAtStartup": true,
+  "lowBatteryThreshold": 20,
+  "last_case_battery": 80,
+  "last_case_seen_at": 1795372899.5613647,
+  "last_device_name": "realme 11 Pro 5G HF Audio"
+}

@@ -1,0 +1,28 @@
+*.iml
+.gradle/
+.kotlin/
+local.properties
+.idea/
+.vscode/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Windows desktop build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.spec
+*.exe
+.venv/
+venv/
+.pytest_cache/
+
+# Reference dumps of other apps must never be committed
+reference-dumps/

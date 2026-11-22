@@ -1,0 +1,240 @@
+# Budora 🎧
+
+<p align="center">
+  <img src="windows/icon.ico" width="80" height="80" alt="Budora Logo" /><br>
+  <strong>Universal Bluetooth Battery Telemetry & Media Companion for Windows & Android</strong><br>
+  <em>Engineered with precision by <strong>Prem Prasad Pradhan — a Zenemoo Software</strong></em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/MRPREM31/Budora"><img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Android-0078D6?logo=windows&logoColor=white" alt="Windows & Android"></a>
+  <img src="https://img.shields.io/badge/Language-Kotlin%20%7C%20Python%203.11-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin & Python">
+  <img src="https://img.shields.io/badge/UI-Jetpack%20Compose%20%7C%20PySide6-4285F4?logo=jetpackcompose&logoColor=white" alt="Compose & Qt">
+  <img src="https://img.shields.io/badge/Bluetooth-BLE%20%2B%20Fast%20Pair-0082FC?logo=bluetooth&logoColor=white" alt="Bluetooth LE">
+  <img src="https://img.shields.io/badge/Privacy-100%25%20Offline-green" alt="100% Offline">
+  <img src="https://img.shields.io/badge/License-MIT-blue" alt="MIT License">
+</p>
+
+---
+
+## 🌟 Overview
+
+Both Windows and Android treat wireless earbuds and Bluetooth audio gear as generic audio sinks. Neither operating system provides clear, individual battery percentages for each component, leaving the **Charging Case** battery level completely invisible and hiding dual-pod telemetry behind cumbersome manufacturer-specific apps.
+
+**Budora** solves this permanently across both desktop and mobile. 
+
+Built for speed, pixel-perfect elegance, and zero background battery drain:
+- On **Windows**, Budora operates as a lightweight System Tray companion featuring a Windows 11 Fluent floating connect flyout, interactive speedometer rev-up battery rings, live Global System Media Transport (GSMTC) media player controls, and smart fallback detection for classic Bluetooth speakers.
+- On **Android**, Budora leverages background Bluetooth Low Energy (BLE) scanning, Google Fast Pair service hooks, Apple proximity pairing decoders, lockscreen-aware floating connect cards, and home screen widgets.
+
+**100% Offline, Zero Tracking, Zero Ads, and Zero Telemetry Sent Across the Web.**
+
+---
+
+## 📸 Visual Showcase
+
+### 📱 Real Android Mobile App & Live Debugging
+Captured directly from an active Android device paired with **CMF Buds 2a**:
+
+<p align="center">
+  <img src="docs/assets/screenshots/android_app.png" width="380" alt="Budora Android Live Mobile Capture" />
+  <br>
+  <em>Live Android telemetry: Real-time dual-pod battery gauges, case memory, connect drawer controls, and status bar notification alerts.</em>
+</p>
+
+---
+
+### 💻 Windows 11 Desktop Experience
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>🖥️ Full Desktop Dashboard with GSMTC Media Player</strong><br><br>
+      <img src="docs/assets/screenshots/windows_dashboard.png" width="100%" alt="Windows Dashboard with Media Player" />
+    </td>
+    <td align="center" width="50%">
+      <strong>⚡ Floating Connect Flyout (TWS Earbuds Mode)</strong><br><br>
+      <img src="docs/assets/screenshots/windows_popup_tws.png" width="100%" alt="Windows Connect Popup TWS" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <strong>🔊 Universal Bluetooth Speaker Box Mode (WS-036 / Soundbox)</strong><br><br>
+      <img src="docs/assets/screenshots/windows_popup_speaker.png" width="55%" alt="Windows Speaker Mode Flyout" />
+      <br>
+      <em>Intelligent fallback: Detects active Bluetooth speakers/boxes without battery telemetry and displays clean single-gauge audio status.</em>
+    </td>
+  </tr>
+</table>
+
+---
+
+## ✨ Key Features
+
+### 🔋 1. Live Three-Component Battery Readout
+- Real-time battery levels for **Left Earbud**, **Right Earbud**, and the **Charging Case**.
+- **Dynamic Color Indicators:**
+  - 🟢 **Green:** Healthy battery ($> 40\%$)
+  - 🟠 **Orange:** Moderate battery ($21\% - 40\%$)
+  - 🔴 **Red:** Low battery ($\le 20\%$)
+- **Active Charging Gauges:** Real-time charging bolt (`⚡`) badges when buds or the case are docked to power.
+- **In-Case Docking Telemetry:** Intelligently dims docked pods and flags them as `(In Case)`.
+
+### 📡 2. Dual-Engine Bluetooth & Fast Pair Decoders
+- **Google Fast Pair (`0xFE2C`):** High-efficiency low-latency component frame parser (Nothing, CMF Buds, Pixel Buds, Sony, JBL).
+- **Apple Proximity Protocol (`0x004C`):** Full decoding of AirPods and Beats proximity advertisement frames.
+- **Universal Core Audio Fallback:** Windows Core Audio (MMDevices) integration automatically identifies connected speakers (`WS-036`, boAt, JBL) while strictly prioritizing active Fast Pair/AirPods earbuds.
+
+### 🧠 3. Smart Case Memory
+- Because charging cases power down their BLE radio when the lid closes and both buds are in your ears, Budora memorizes the last verified case battery level (marked with a `~` prefix) and automatically refreshes when pods are redocked or the case lid reopens.
+
+### 🎛️ 4. Windows 11 Fluent Flyout & GSMTC Media Controls
+- **Speedometer Rev-up Animation:** Circular vector gauges animate smoothly from 0% to the target percentage whenever the drawer appears.
+- **System Tray Integration:** Runs quietly in the notification area. Left-click to open/close the dashboard, or right-click for quick actions.
+- **Windows GSMTC Media Player:** Controls Windows Media players (Spotify, YouTube, Chrome, Media Player) with live track titles, artists, album artwork, and play/pause/skip buttons directly from the Budora dashboard.
+
+### 📱 5. Android Floating Drawer & Home Screen Widgets
+- **Edge Slide Flyout:** Slides smoothly into view from the bottom or top of your screen upon Bluetooth connection.
+- **Lockscreen Aware:** Defers display if the phone is asleep, presenting the connect card seamlessly when you unlock (`USER_PRESENT`).
+- **Launcher Widget:** 4x2 responsive home screen widget with one-tap quick flyout summon.
+- **Status Bar Alerts:** Heads-up alerts when any pod drops below 20% or reaches critical low (10%).
+
+---
+
+## 🚀 Quick Start & Installation
+
+### 💻 Windows Installation
+
+#### Prerequisites
+- Windows 10 (1809+) or Windows 11 (64-bit)
+- Python 3.10+ (Python 3.11 recommended)
+- Bluetooth adapter with BLE support
+
+#### 1. Quick Launch (Zero Setup)
+Double-click **`run.bat`** in the repository root. The launcher will automatically find Python, initialize the working directory, and launch the Budora desktop agent in the background with a system tray icon.
+
+#### 2. Manual Installation
+```powershell
+# Clone the repository
+git clone https://github.com/MRPREM31/Budora.git
+cd Budora
+
+# Install required Python packages
+pip install PySide6 bleak winsdk pillow
+
+# Run the Windows application
+python windows/main.py
+```
+
+#### 3. Building Standalone Windows Executable (`Budora.exe`)
+```powershell
+pip install pyinstaller
+pyinstaller --noconsole --onefile --icon=windows/icon.ico --name=Budora windows/main.py
+```
+
+---
+
+### 📱 Android Installation
+
+#### Prerequisites
+- Android 12 (API 31) or higher
+- Bluetooth and Location permissions (for BLE scanning)
+- Android Studio Ladybug / Meerkat or Gradle command-line tools
+
+#### 1. Build and Install via Gradle
+```bash
+# Clone the repository
+git clone https://github.com/MRPREM31/Budora.git
+cd Budora
+
+# Build debug APK
+./gradlew assembleDebug
+
+# Install on your connected Android device
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+---
+
+## 🔒 Privacy & Permissions
+
+Budora is built strictly offline. It contains no analytics SDKs, collects no telemetry, and declares **no internet access permissions**.
+
+| Platform | Permission | Purpose |
+|---|---|---|
+| **Android** | `BLUETOOTH_SCAN` | Scans for Bluetooth LE Fast Pair & AirPods beacons (`neverForLocation` flag declared). |
+| **Android** | `BLUETOOTH_CONNECT` | Detects when paired Bluetooth devices connect or disconnect. |
+| **Android** | `POST_NOTIFICATIONS` | Displays the status row and low battery notifications. |
+| **Android** | `SYSTEM_ALERT_WINDOW` | Enables the animated floating connect drawer over other apps. |
+| **Windows** | `WinRT BLE & MMDevices` | Queries local Bluetooth LE advertisements and Core Audio active device endpoints. |
+
+---
+
+## 🛠️ Repository Structure
+
+```
+Budora/
+├── app/                         # Android application (Kotlin + Jetpack Compose)
+│   ├── src/main/java/com/budora/
+│   │   ├── ble/                 # FastPairPayload, ProximityPayload, PodsScanner, PodsTracker
+│   │   ├── data/                # Settings, CaseMemory, Appearance, Connection state
+│   │   ├── service/             # Background Bluetooth LE tracking service
+│   │   ├── ui/                  # Compose UI: Dashboard, Floating Drawer, Settings
+│   │   └── widget/              # Android Home Screen AppWidgetProvider
+│   └── build.gradle.kts
+├── windows/                     # Windows desktop application (Python + PySide6)
+│   ├── main.py                  # Single-instance application entry point & IPC socket
+│   ├── tracker.py               # Candidate arbitration, Smart Case Memory, MMDevices fallback
+│   ├── scanner.py               # Asynchronous Bleak BLE advertisement scanner
+│   ├── fast_pair_payload.py     # Fast Pair 0xFE2C component frame decoder
+│   ├── proximity_payload.py     # Apple proximity beacon decoder
+│   ├── models.py                # BudoraState & BudoraModel dataclasses
+│   ├── config.py                # Persistent settings & dynamic color band resolvers
+│   ├── ui_main_window.py        # Windows 11 Fluent Dashboard & GSMTC Media Player
+│   ├── ui_popup.py              # Floating connect flyout with rev-up speedometer rings
+│   ├── ui_tray.py               # Windows System Tray icon & context menus
+│   ├── test_budora.py           # Comprehensive unit tests
+│   └── icon.ico                 # High-resolution application icon
+├── docs/
+│   ├── assets/screenshots/      # High-resolution showcase screenshots (Android & Windows)
+│   └── TECHNICAL.md             # In-depth Bluetooth protocol & telemetry architecture docs
+├── run.bat                      # One-click Windows application launcher
+├── build.gradle.kts             # Root Gradle build script
+├── settings.gradle.kts          # Gradle project configuration
+└── LICENSE                      # MIT License
+```
+
+---
+
+## 🧪 Unit Testing
+
+Run the automated test suite for the Windows telemetry engine:
+```powershell
+python -m unittest windows/test_budora.py
+```
+
+Expected output:
+```
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.182s
+
+OK
+```
+
+---
+
+## 💖 Support & Donate
+
+If **Budora** enhances your daily audio and workflow experience, consider supporting our ongoing development:
+
+👉 **[Support Zenemoo India — Donate Here](https://www.zenemoo.in/support-zenemooindia)**
+
+Every contribution fuels continuous development, new device telemetry integrations, and open-source innovation.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).  
+Copyright (c) 2026 **Prem Prasad Pradhan — a Zenemoo Software**.

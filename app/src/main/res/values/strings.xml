@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Budora</string>
+
+    <string name="battery_unknown">&#8212;</string>
+    <string name="pod_left">Left</string>
+    <string name="pod_right">Right</string>
+    <string name="pod_case">Case</string>
+    <string name="battery_percent">%1$d%%</string>
+    <!-- A remembered case level: the pods are out of the case, so this is the last reading, not a live one. -->
+    <string name="battery_remembered_percent">~%1$d%%</string>
+
+    <string name="service_channel_name">Budora status</string>
+    <string name="service_channel_description">Ongoing battery readout while your earbuds are connected.</string>
+    <string name="lid_channel_name">Case opened</string>
+    <string name="lid_channel_description">A brief battery summary when you open the case.</string>
+
+    <string name="status_connected">Connected</string>
+    <string name="status_disconnected">Earbuds not connected</string>
+    <string name="status_disconnected_hint">Connect your earbuds from Bluetooth settings and the battery readout appears here.</string>
+    <string name="status_searching">Looking for your earbuds…</string>
+    <string name="status_searching_hint">Connected. Waiting for the first battery beacon, which usually takes a few seconds.</string>
+
+    <string name="lid_open">Lid open</string>
+    <string name="charging">Charging</string>
+
+    <string name="case_last_seen">last seen %1$s</string>
+    <string name="age_just_now">just now</string>
+    <string name="age_minutes">%1$d min ago</string>
+    <string name="age_hours">%1$d h ago</string>
+    <string name="age_days">%1$d d ago</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_open">Open settings</string>
+    <string name="settings_back">Back</string>
+
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="theme_system">Default</string>
+    <string name="theme_ocean">Ocean</string>
+    <string name="theme_sunset">Sunset</string>
+    <string name="theme_forest">Forest</string>
+    <string name="theme_grape">Grape</string>
+    <string name="settings_dark_mode">Dark mode</string>
+    <string name="dark_mode_system">System</string>
+    <string name="dark_mode_light">Light</string>
+    <string name="dark_mode_dark">Dark</string>
+
+    <string name="popup_connected_title">Earbuds connected</string>
+    <string name="popup_dismiss">Dismiss</string>
+
+    <string name="settings_section_popup">Popups</string>
+    <string name="settings_connect_popup">Show on connect</string>
+    <string name="settings_connect_popup_summary">Slide a battery card in from the edge of the screen when your earbuds connect.</string>
+    <string name="settings_popup_position">Position</string>
+    <string name="popup_position_top">Top</string>
+    <string name="popup_position_bottom">Bottom</string>
+    <string name="settings_overlay_permission">Allow displaying over other apps</string>
+    <string name="settings_overlay_permission_summary">Needed to draw the connect popup over whatever app you are in. Without it the popup cannot be shown.</string>
+    <string name="settings_overlay_grant">Grant</string>
+    <string name="settings_auto_dismiss">Dismiss automatically</string>
+    <string name="settings_auto_dismiss_summary">Hide the popup by itself instead of waiting for a swipe.</string>
+    <string name="settings_popup_timeout">Hide after</string>
+    <string name="settings_seconds">%1$d s</string>
+
+    <string name="settings_preview_popup">Preview popup</string>
+    <string name="settings_preview_popup_summary">Show the connect popup now, with sample battery levels. Debug builds only.</string>
+    <string name="settings_preview_show">Show</string>
+
+    <string name="settings_section_audio">Audio</string>
+    <string name="settings_resume_music">Resume music when connected</string>
+    <string name="settings_resume_music_summary">Sends Play to the last app that was playing once the earbuds’ audio link is up. Does nothing if nothing was playing.</string>
+
+    <string name="settings_section_gestures">Gestures</string>
+    <string name="settings_gestures_title">Double-tap is handled by the earbuds</string>
+    <string name="settings_gestures_body">A double tap sends a standard Bluetooth command straight to the phone: with the earbud set to assistant (the default) Android opens your assistant; set to Play/Pause, Next or Previous it controls playback. This works without this app and cannot be changed from Android — the action is stored in the earbuds and their companion settings.</string>
+
+    <string name="settings_version">Budora %1$s</string>
+    <string name="settings_version_debug">Budora %1$s · debug</string>
+    <string name="settings_creator">Made by Prem Prasad Pradhan a Zenemoo Software</string>
+
+    <string name="widget_description">Shows connected earbuds battery and opens the battery popup drawer.</string>
+    <string name="widget_tap_hint">Tap to open drawer</string>
+    <string name="settings_section_widget">Home Screen</string>
+    <string name="settings_add_widget">Add Widget to Home screen</string>
+    <string name="settings_add_widget_summary">Place a draggable battery card on your home screen. Tapping it opens the drawer.</string>
+    <string name="settings_add_shortcut">Add Quick Popup icon</string>
+    <string name="settings_add_shortcut_summary">Add a 1x1 Budora icon on your home screen that opens the battery popup drawer directly.</string>
+
+    <string name="low_battery_channel_name">Low battery alerts</string>
+    <string name="low_battery_channel_description" formatted="false">Alerts when your earbuds or charging case battery drops below 20% or 10%.</string>
+    <string name="low_battery_title">%1$s • Low Battery</string>
+    <string name="low_battery_left">Your Left earbud is low on battery (%1$d%%). Please charge it.</string>
+    <string name="low_battery_left_critical">Your Left earbud is critically low (%1$d%%). Please charge it.</string>
+    <string name="low_battery_right">Your Right earbud is low on battery (%1$d%%). Please charge it.</string>
+    <string name="low_battery_right_critical">Your Right earbud is critically low (%1$d%%). Please charge it.</string>
+    <string name="low_battery_case">Your Charging case is low on battery (%1$d%%). Please charge it.</string>
+    <string name="low_battery_case_critical">Your Charging case is critically low (%1$d%%). Please charge it.</string>
+
+    <string name="settings_section_branding">App Logo &amp; Branding</string>
+    <string name="settings_logo_title">Dynamic App Logo</string>
+    <string name="settings_logo_summary">Upload and crop a custom photo for the app icon, widgets, and notifications.</string>
+    <string name="settings_app_name_label">App Name</string>
+    <string name="settings_app_name_fixed">Budora (Fixed · Default)</string>
+    <string name="settings_upload_logo">Upload Photo</string>
+    <string name="settings_reset_logo">Reset to Default</string>
+    <string name="settings_logo_badge_custom">Custom Logo Active</string>
+    <string name="settings_logo_badge_default">Default Headphone Logo</string>
+    <string name="settings_crop_dialog_title">Crop App Logo</string>
+    <string name="settings_crop_dialog_subtitle">Drag to move, pinch to zoom</string>
+    <string name="settings_crop_save">Save &amp; Apply</string>
+    <string name="settings_crop_cancel">Cancel</string>
+    <string name="settings_crop_rotate">Rotate</string>
+    <string name="settings_crop_reset">Reset View</string>
+    <string name="settings_logo_shape_label">Icon Shape</string>
+    <string name="logo_shape_round">Round</string>
+    <string name="logo_shape_side_round">Side Round</string>
+    <string name="logo_shape_square">Square</string>
+    <string name="settings_add_app_shortcut">Add App Icon to Home screen</string>
+    <string name="settings_add_app_shortcut_summary">Pins a 1x1 Budora launcher icon using your custom photo and selected shape.</string>
+</resources>

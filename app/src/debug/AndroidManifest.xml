@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        Debug builds only. Bluetooth permission checks are enforced per UID
+        against the *app's* declared permissions, so the instrumentation APK
+        cannot bring this in on its own. AdvertiseProbeTest needs it to turn the
+        phone into a known BLE transmitter during radio diagnostics. Release
+        builds never request it.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+    <application>
+        <!--
+            Renders the connect popup on demand so its design can be reviewed
+            and screenshotted without AirPods. Debug-only: the class lives in
+            the debug source set and does not exist in a release build.
+
+            Exported so `adb shell am broadcast` can reach it. That is safe
+            here because it only ever draws a popup with hardcoded values, and
+            it never ships.
+        -->
+        <receiver
+            android:name=".debug.PopupPreviewReceiver"
+            android:exported="true" />
+    </application>
+</manifest>
