@@ -212,7 +212,8 @@ Budora/
 │   └── icon.ico                 # High-resolution application icon
 ├── docs/
 │   ├── assets/screenshots/      # High-resolution showcase screenshots (Android & Windows)
-│   └── TECHNICAL.md             # In-depth Bluetooth protocol & telemetry architecture docs
+│   ├── TECHNICAL.md             # In-depth Bluetooth protocol & telemetry architecture docs
+│   └── USER_MANUAL.tex          # Complete LaTeX User Manual & Device Telemetry Reference
 ├── run.bat                      # One-click Windows application launcher
 ├── build.gradle.kts             # Root Gradle build script
 ├── settings.gradle.kts          # Gradle project configuration

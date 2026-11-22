@@ -1,0 +1,363 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Core Geometry & Spacing ---
+\usepackage[margin=2.5cm,top=2.8cm,bottom=2.8cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.12}
+
+% --- Typography & Fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo} % Palatino typography
+\usepackage{microtype}
+
+% --- Colors ---
+\usepackage{xcolor}
+\definecolor{BudoraGreen}{HTML}{3DDC84}
+\definecolor{BudoraDark}{HTML}{08090F}
+\definecolor{BudoraNavy}{HTML}{12141F}
+\definecolor{BudoraBlue}{HTML}{0078D6}
+\definecolor{BudoraPurple}{HTML}{7F52FF}
+\definecolor{BudoraOrange}{HTML}{FFA500}
+\definecolor{BudoraRed}{HTML}{FF4444}
+\definecolor{BorderGray}{HTML}{2B3040}
+\definecolor{LightBg}{HTML}{F6F8FA}
+
+% --- Tables & Layout ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+
+% --- Listings & Code ---
+\usepackage{listings}
+\lstset{
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{LightBg},
+    frame=single,
+    rulecolor=\color{BorderGray},
+    keywordstyle=\color{BudoraBlue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{BudoraPurple},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false
+}
+
+% --- Boxes & Callouts ---
+\usepackage[most]{tcolorbox}
+\newtcolorbox{infobox}[1][]{
+    colback=LightBg,
+    colframe=BudoraBlue,
+    fonttitle=\bfseries\color{white},
+    colbacktitle=BudoraBlue,
+    enhanced,
+    attach boxed title to top left={xshift=10pt, yshift=-8pt},
+    boxed title style={boxrule=0pt, arc=3pt},
+    title=#1,
+    arc=4pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=10pt
+}
+
+\newtcolorbox{tipbox}[1][]{
+    colback=LightBg,
+    colframe=BudoraGreen!80!black,
+    fonttitle=\bfseries\color{white},
+    colbacktitle=BudoraGreen!80!black,
+    enhanced,
+    attach boxed title to top left={xshift=10pt, yshift=-8pt},
+    boxed title style={boxrule=0pt, arc=3pt},
+    title=#1,
+    arc=4pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=10pt
+}
+
+\newtcolorbox{warnbox}[1][]{
+    colback=LightBg,
+    colframe=BudoraOrange!90!black,
+    fonttitle=\bfseries\color{white},
+    colbacktitle=BudoraOrange!90!black,
+    enhanced,
+    attach boxed title to top left={xshift=10pt, yshift=-8pt},
+    boxed title style={boxrule=0pt, arc=3pt},
+    title=#1,
+    arc=4pt,
+    left=12pt,
+    right=12pt,
+    top=12pt,
+    bottom=10pt
+}
+
+% --- Section Styling ---
+\usepackage{titlesec}
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{BudoraDark}}
+    {\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{BudoraBlue}}
+    {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries\color{BudoraNavy}}
+    {\thesubsubsection}{1em}{}
+
+% --- Headers & Footers ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\bfseries\color{gray} Budora --- Universal Bluetooth Battery Companion}
+\fancyhead[R]{\small\color{gray} Official User Manual}
+\fancyfoot[L]{\small\color{gray} \textcopyright{} 2026 Prem Prasad Pradhan --- a Zenemoo Software}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- Lists & Enumerations ---
+\usepackage{enumitem}
+\setlist{itemsep=3pt, topsep=4pt}
+
+% --- Hyperlinks ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=BudoraBlue,
+    filecolor=BudoraPurple,
+    urlcolor=BudoraBlue,
+    citecolor=BudoraGreen,
+    pdftitle={Budora User Manual & Device Telemetry Reference},
+    pdfauthor={Prem Prasad Pradhan},
+    pdfkeywords={Bluetooth, Fast Pair, AirPods, Battery Monitor, Budora, Windows, Android}
+}
+
+% --- Document Content ---
+\begin{document}
+
+% === TITLE PAGE / COVER HEADER ===
+\begin{center}
+    {\Huge \textbf{\color{BudoraDark} BUDORA \raisebox{1pt}{\large \color{BudoraGreen} \textbullet}}} \\[6pt]
+    {\Large \textbf{Universal Bluetooth Battery Telemetry \& Media Companion}} \\[4pt]
+    {\large \textit{Official User Manual, Operations Guide \& Comprehensive Device Compatibility Reference}} \\[14pt]
+    
+    \textbf{Prem Prasad Pradhan} \\
+    \textit{a Zenemoo Software} \\[8pt]
+    
+    \href{https://github.com/MRPREM31/Budora}{\texttt{https://github.com/MRPREM31/Budora}} \quad $\vert$ \quad
+    \href{https://www.zenemoo.in/support-zenemooindia}{\textbf{\color{BudoraPurple} Support \& Donations}} \\[14pt]
+    \rule{\linewidth}{1.2pt}
+\end{center}
+
+\vspace{0.5cm}
+
+\tableofcontents
+
+\vspace{0.8cm}
+\hrule
+\vspace{0.8cm}
+
+% ==============================================================================
+\section{Introduction \& Architecture}
+% ==============================================================================
+
+Modern operating systems historically treat wireless earbuds, headphones, and Bluetooth audio accessories as generic monolithic audio sinks. When you pair an advanced set of True Wireless Stereo (TWS) earbuds to Windows or Android:
+\begin{itemize}
+    \item Individual battery levels for the \textbf{Left Earbud} and \textbf{Right Earbud} are flattened or hidden.
+    \item The \textbf{Charging Case} battery percentage is completely inaccessible because the case itself shuts down its Bluetooth radio once the earbuds are deployed.
+    \item Users are forced to install heavyweight, manufacturer-specific OEM applications burdened with background account synchronisation, location telemetry, and intrusive advertising.
+\end{itemize}
+
+\textbf{Budora} provides a cross-platform (Windows 11/10 and Android 12+) zero-telemetry, 100\% offline monitoring architecture. It passively sniffs Bluetooth Low Energy (BLE) broadcast frames, extracts Google Fast Pair and Apple Proximity payload packets, and renders real-time three-component readouts without requiring internet permissions or account creation.
+
+\begin{infobox}[Core Architecture Tenets]
+\begin{enumerate}
+    \item \textbf{100\% Offline by Design:} Budora declares no network permissions (\texttt{android.permission.INTERNET} is omitted from the Android manifest, and the Windows service opens no external sockets).
+    \item \textbf{Dual-Engine Parsing:} Decodes Google Fast Pair Service (\texttt{0xFE2C}) component frames and Apple Proximity Pairing (\texttt{0x004C}) manufacturer frames concurrently.
+    \item \textbf{Smart Case Memory:} Automatically persists the last verified case battery reading when the lid closes and buds are docked or removed.
+    \item \textbf{Universal Classic Fallback:} Detects active Bluetooth speakers and soundboxes (e.g., boAt Stone, WS-036, JBL Flip) via Windows Core Audio (MMDevices) and Android A2DP/HFP profile managers.
+\end{enumerate}
+\end{infobox}
+
+% ==============================================================================
+\section{Comprehensive Device Compatibility Matrix}
+% ==============================================================================
+
+Budora works with three distinct classes of Bluetooth devices. Below is the researched and verified compatibility matrix.
+
+\subsection{Category 1: Google Fast Pair Supported Devices (0xFE2C)}
+Devices equipped with Google Fast Pair Service (GFPS) broadcast unencrypted multi-component battery frames containing real-time percentages for Left Earbud, Right Earbud, and Charging Case.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l p{7.5cm} c}
+\toprule
+\textbf{Brand} & \textbf{Verified Models} & \textbf{Telemetry Supported} \\
+\midrule
+\textbf{CMF by Nothing} & CMF Buds, CMF Buds Pro, CMF Buds 2a, CMF Buds Pro 2 & Left + Right + Case + Dock \\
+\textbf{Nothing} & Nothing Ear (1), Ear (2), Ear (a), Ear (2024), Ear (stick) & Left + Right + Case + Dock \\
+\textbf{Google} & Pixel Buds (2020), Pixel Buds A-Series, Pixel Buds Pro, Pro 2 & Left + Right + Case + Dock \\
+\textbf{Sony} & WF-1000XM4, WF-1000XM5, WF-C500, WF-C700N, LinkBuds, LinkBuds S, WH-1000XM4, WH-1000XM5 & Left + Right + Case / Single \\
+\textbf{boAt} & Airdopes Prime 800D, Prime Supreme, Prime 513 ANC, Prime 512, Prime 511V, Prime 413, Prime 412, Airdopes 601 ANC & Left + Right + Case \\
+\textbf{JBL} & Live Pro 2, Live 660NC, Live Pro+, Tour Pro 2, Tour One M2, Tune Flex, Tune 230NC & Left + Right + Case \\
+\textbf{Bose} & QuietComfort 35 II, QC 45, QC Ultra, QC Earbuds II, QC Ultra Earbuds & Left + Right + Case / Single \\
+\textbf{OnePlus} & OnePlus Buds Pro, Buds Pro 2, Buds Pro 3, Buds Z2, Buds Ace, Nord Buds 2/3 & Left + Right + Case \\
+\textbf{Realme} & Realme Buds Air 5 Pro, Air 6 Pro, Buds T300, Buds Wireless & Left + Right + Case \\
+\textbf{Anker / Soundcore} & Liberty 4, Liberty 4 NC, Liberty 3 Pro, Space Q45, Space A40, Life P3 & Left + Right + Case \\
+\textbf{Jabra} & Elite 2, Elite 3, Elite 4, Elite 5, Elite 8 Active, Elite 10 & Left + Right + Case \\
+\textbf{Sennheiser} & Momentum True Wireless 3, Momentum 4 Wireless, Accentum Plus & Left + Right + Case / Single \\
+\bottomrule
+\end{tabularx}
+\caption{Google Fast Pair Ecosystem Compatibility Matrix}
+\end{table}
+
+\subsection{Category 2: Apple Proximity Pairing Protocol Devices (0x004C)}
+Budora contains a native nibble-level unpacker for Apple beacon frames transmitted under company identifier \texttt{0x004C}.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l c c p{6.5cm}}
+\toprule
+\textbf{Device Model} & \textbf{Model Code} & \textbf{Encrypted?} & \textbf{Telemetry Behaviour} \\
+\midrule
+AirPods (1st gen) & \texttt{0x0220} & No & Unencrypted nibbles: Left (high), Right (low), Case \\
+AirPods (2nd gen) & \texttt{0x0F20} & No & Unencrypted nibbles with primary pod swap detection \\
+AirPods Pro (1st gen) & \texttt{0x0E20} & No & Full dual-pod and wireless charging case telemetry \\
+AirPods (3rd gen) & \texttt{0x1320} & Partial & Live readout while lid is open / unencrypted broadcast \\
+AirPods Pro (2nd gen) & \texttt{0x1420} & Partial & Dual-pod tracking with MagSafe Case memory \\
+AirPods Max & \texttt{0x0A20} & No & Single-headphone battery telemetry with smart case sleep \\
+Beats Powerbeats Pro & \texttt{0x0B20} & No & Dual earpiece readout + charging case level \\
+Beats Fit Pro / Solo Pro & \texttt{0x0C20} & No & Dual earpiece readout + charging state flags \\
+\bottomrule
+\end{tabularx}
+\caption{Apple Proximity Ecosystem Compatibility Matrix}
+\end{table}
+
+\subsection{Category 3: Universal Bluetooth Audio \& Speaker Box Fallback}
+For standard Bluetooth devices that do not broadcast BLE Fast Pair beacons, Budora falls back to Windows Core Audio (MMDevices) and classic Bluetooth profile tracking.
+
+\begin{itemize}
+    \item \textbf{Supported Speaker Boxes:} boAt Stone series (Stone 180, 260, 650, 1200, 1500), WS-036 / WS series soundboxes, JBL Flip (4, 5, 6), JBL Charge (4, 5), JBL Go series, Marshall Emberton, Sony SRS-XB series, Tribit StormBox, and desktop Bluetooth soundbars.
+    \item \textbf{Display Behaviour:} Automatically activates \textbf{Single-Gauge Mode}, flagging the device as \texttt{Connected \& Active} with dedicated speaker icons.
+\end{itemize}
+
+\begin{tipbox}[How to Test If Your Earbuds Support Fast Pair]
+\begin{enumerate}
+    \item \textbf{Packaging Check:} Inspect the box for the official \textit{"Google Fast Pair"} logo or \textit{"Works with Android"} badge.
+    \item \textbf{Out-of-the-Box Proximity Probe:} Turn on Bluetooth and Location on an unlocked Android 12+ phone. Open the charging case next to the phone. If a native Google prompt appears asking to pair, the device is fully compatible.
+    \item \textbf{Spec Sheet Search:} Search the manufacturer's technical specifications for \texttt{GFPS} (Google Fast Pair Service) or BLE Advertising Protocol \texttt{0xFE2C}.
+\end{enumerate}
+\end{tipbox}
+
+% ==============================================================================
+\section{Android Mobile Operations Guide}
+% ==============================================================================
+
+\subsection{Installation \& System Permissions}
+\begin{enumerate}
+    \item \textbf{Direct APK Installation:} Transfer \texttt{Budora.apk} to your phone and install via any file manager, or run via ADB:
+    \begin{lstlisting}[language=bash]
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+    \end{lstlisting}
+    \item \textbf{Permission Granting:}
+    \begin{itemize}
+        \item \textbf{Nearby Devices (\texttt{BLUETOOTH\_SCAN} \& \texttt{BLUETOOTH\_CONNECT}):} Required to listen for low-energy advertisements. Note: Budora declares the \texttt{neverForLocation} flag, guaranteeing zero GPS or physical tracking.
+        \item \textbf{Display Over Other Apps (\texttt{SYSTEM\_ALERT\_WINDOW}):} Enables the floating edge connect drawer to slide over launcher and third-party apps upon connection.
+        \item \textbf{Notifications (\texttt{POST\_NOTIFICATIONS}):} Powers the persistent single-line status notification and low-battery alerts.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Core Features \& Interface Elements}
+\begin{itemize}
+    \item \textbf{Dual Battery Rings:} Left and Right earbud rings display semantic color bands:
+    \begin{itemize}
+        \item \color{BudoraGreen}\textbf{Green ($> 40\%$):} \color{black} Healthy charge.
+        \item \color{BudoraOrange}\textbf{Orange ($21\% - 40\%$):} \color{black} Moderate battery.
+        \item \color{BudoraRed}\textbf{Red ($\le 20\%$):} \color{black} Low battery warning threshold.
+    \end{itemize}
+    \item \textbf{Smart Case Memory (\texttt{\~{}}):} When earbuds are in active use, the charging case BLE radio sleeps. Budora retains the last known case level (e.g., \texttt{\~{}70\%}) along with a timestamp (\textit{"last seen 2 min ago"}).
+    \item \textbf{In-Case Docking Indicator:} When an individual pod is returned to the case, its gauge dims and displays \texttt{(In Case)}, reflecting power-dock status.
+    \item \textbf{Now Playing Card:} Integrates with Android's notification listener to surface track metadata and live album artwork directly underneath the telemetry rings.
+\end{itemize}
+
+\subsection{Settings \& Customization}
+Open Settings by tapping the gear icon (\texttt{\#990, 297}) in the top-right header:
+\begin{itemize}
+    \item \textbf{App Logo \& Branding:} Toggle between the official Budora squircle emblem or upload a custom image. Choose between \textit{Round}, \textit{Side Round}, or \textit{Square} silhouette clipping.
+    \item \textbf{Color Palettes:} Select from five themes: \textbf{Default}, \textbf{Ocean}, \textbf{Sunset}, \textbf{Forest}, and \textbf{Grape}.
+    \item \textbf{Edge Drawer Preferences:} Set the popup anchor position (\textit{Bottom} vs. \textit{Top}) and customize the auto-dismiss timer (3s, 8s, 15s, or manual swipe).
+\end{itemize}
+
+% ==============================================================================
+\section{Windows Desktop Operations Guide}
+% ==============================================================================
+
+\subsection{Quick Launch \& Standalone Execution}
+\begin{enumerate}
+    \item \textbf{One-Click Launch:} Double-click \texttt{run.bat} located in the Budora root directory. The script resolves local Python 3.11 executables and boots \texttt{windows/main.py} in background mode.
+    \item \textbf{Manual Startup:}
+    \begin{lstlisting}[language=bash]
+cd windows
+python main.py
+    \end{lstlisting}
+    \item \textbf{Single-Instance Guard:} Budora utilizes a local IPC socket (\texttt{Budora\_SingleInstance\_IPC\_Socket}). Launching \texttt{run.bat} while an instance is already active brings the existing dashboard immediately to the foreground.
+\end{enumerate}
+
+\subsection{Desktop Features}
+\begin{itemize}
+    \item \textbf{Fluent Floating Connect Flyout:} Pops up smoothly in the bottom-right corner above the Windows taskbar whenever your earbuds or speaker connect.
+    \item \textbf{Speedometer Rev-Up Animation:} Circular vector gauges smoothly animate from 0\% up to target telemetry values upon appearance.
+    \item \textbf{System Tray Companion:} Minimises to the Windows notification tray. Left-click toggles the main window; right-click opens the context menu (Settings, Re-scan, Disconnect, Exit).
+    \item \textbf{Windows GSMTC Media Integration:} Queries Windows Global System Media Transport Controls to display track title, artist, album thumbnail, and playback transport controls (Play, Pause, Next, Previous) directly inside the desktop dashboard.
+\end{itemize}
+
+% ==============================================================================
+\section{Troubleshooting \& Frequently Asked Questions}
+% ==============================================================================
+
+\begin{warnbox}[Frequently Encountered Issues]
+\textbf{Q: The floating popup did not appear on Android when my earbuds connected.} \\
+\textbf{A:} Ensure that \textit{Display Over Other Apps} (\texttt{SYSTEM\_ALERT\_WINDOW}) is toggled ON under Android Settings $\rightarrow$ Apps $\rightarrow$ Budora $\rightarrow$ Appear on Top. On devices running ColorOS or MIUI, verify that background auto-start permissions are enabled.
+
+\vspace{6pt}
+\textbf{Q: Why does the case battery have a tilde (\texttt{\~{}}) prefix?} \\
+\textbf{A:} The tilde indicates that the reading is from \textbf{Smart Case Memory}. Because charging cases shut down their radio when both pods are removed, Budora displays the last verified percentage until the lid is opened again.
+
+\vspace{6pt}
+\textbf{Q: Windows shows my speaker as ``Connected \& Active'' but battery is ``--''.} \\
+\textbf{A:} Classic Bluetooth speakers (such as WS-036 or soundbars) only expose standard audio endpoints without BLE battery GATT profiles. Budora accurately detects their active audio connection state without displaying false telemetry.
+\end{warnbox}
+
+% ==============================================================================
+\section{Support, Donations \& Community}
+% ==============================================================================
+
+Budora is an independently developed, ad-free, 100\% offline utility. If this software improves your daily audio workflow on Android and Windows, please consider supporting ongoing development, new device protocol reverse-engineering, and serverless maintenance:
+
+\vspace{0.4cm}
+\begin{center}
+    \begin{tcolorbox}[colback=BudoraNavy,colframe=BudoraGreen,width=0.88\linewidth,arc=6pt,center]
+        \centering
+        \color{white}
+        {\Large \textbf{Support Zenemoo India}}\\[4pt]
+        {\normalsize Every contribution directly fuels open-source innovation and firmware telemetry decoders.}\\[8pt]
+        \href{https://www.zenemoo.in/support-zenemooindia}{\large \textbf{\color{BudoraGreen} https://www.zenemoo.in/support-zenemooindia}}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.4cm}
+
+\subsection{Official Project Resources}
+\begin{itemize}
+    \item \textbf{GitHub Repository:} \href{https://github.com/MRPREM31/Budora}{\texttt{https://github.com/MRPREM31/Budora}}
+    \item \textbf{Issue Tracker:} \href{https://github.com/MRPREM31/Budora/issues}{\texttt{https://github.com/MRPREM31/Budora/issues}}
+    \item \textbf{Technical Documentation:} \texttt{docs/TECHNICAL.md}
+    \item \textbf{License:} MIT License --- Copyright \textcopyright{} 2026 Prem Prasad Pradhan.
+\end{itemize}
+
+\end{document}
