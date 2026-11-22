@@ -1,4 +1,9 @@
+import sys
+import os
 import unittest
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from proximity_payload import ProximityPayload
 from fast_pair_payload import FastPairPayload
 from tracker import BudoraTracker
