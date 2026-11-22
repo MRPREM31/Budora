@@ -3,7 +3,7 @@
 <p align="center">
   <img src="windows/custom_logo.png" width="92" height="92" alt="Budora Logo" /><br>
   <strong>Universal Bluetooth Battery Telemetry & Media Companion for Windows & Android</strong><br>
-  <em>Engineered with precision by <strong>Prem Prasad Pradhan — a Zenemoo Software</strong></em>
+  <em>Engineered with precision by <strong><a href="https://mrprem.in/">Prem Prasad Pradhan</a> — a <a href="https://www.zenemoo.in/">Zenemoo Software</a></strong></em>
 </p>
 
 <p align="center">
@@ -250,7 +250,29 @@ Every contribution fuels continuous development, new device telemetry integratio
 
 ---
 
-## 📄 License
+## 📄 License & Legal
 
 This project is licensed under the [MIT License](LICENSE).  
-Copyright (c) 2026 **Prem Prasad Pradhan — a Zenemoo Software**.
+Copyright (c) 2026 [**Prem Prasad Pradhan**](https://mrprem.in/) — a [**Zenemoo Software**](https://www.zenemoo.in/).
+
+---
+
+<p align="center">
+  <a href="https://www.zenemoo.in/">
+    <img src="windows/custom_logo.png" width="48" height="48" alt="Zenemoo Budora" />
+  </a><br>
+  <strong>Budora by Zenemoo</strong><br>
+  <em>Next-Generation Offline Bluetooth Telemetry for Windows & Android</em>
+</p>
+
+<p align="center">
+  <a href="https://www.zenemoo.in/">🌐 Official Website</a> &bull;
+  <a href="https://mrprem.in/">👨‍💻 Founder Portfolio</a> &bull;
+  <a href="https://www.zenemoo.in/support-zenemooindia">💖 Support & Donate</a> &bull;
+  <a href="https://github.com/MRPREM31/Budora/issues">🐛 Report an Issue</a> &bull;
+  <a href="docs/USER_MANUAL.tex">📖 LaTeX User Manual</a>
+</p>
+
+<p align="center">
+  <sub>Built with ❤️ by <a href="https://mrprem.in/">Prem Prasad Pradhan</a> under <a href="https://www.zenemoo.in/">Zenemoo Software</a>. All rights reserved.</sub>
+</p>
