@@ -40,17 +40,17 @@ Built for speed, pixel-perfect elegance, and zero background battery drain:
   <tr>
     <td align="center" width="33%">
       <strong>🔋 Main Battery Readout</strong><br><br>
-      <img src="docs/assets/screenshots/android_app.png" width="100%" alt="Budora Android Live Battery Readout" /><br>
+      <img src="docs/assets/screenshots/android_app_live.png" width="100%" alt="Budora Android Live Battery Readout" /><br>
       <em>Dual-pod battery rings, case memory (~70%), and live media playback.</em>
     </td>
     <td align="center" width="33%">
       <strong>⚡ Floating Connect Flyout</strong><br><br>
-      <img src="docs/assets/screenshots/android_popup.png" width="100%" alt="Budora Android Connect Drawer" /><br>
+      <img src="docs/assets/screenshots/android_popup_live.png" width="100%" alt="Budora Android Connect Drawer" /><br>
       <em>Lockscreen-aware edge drawer that slides in on Bluetooth connection.</em>
     </td>
     <td align="center" width="33%">
       <strong>⚙️ Settings & Customization</strong><br><br>
-      <img src="docs/assets/screenshots/android_settings.png" width="100%" alt="Budora Android Settings Screen" /><br>
+      <img src="docs/assets/screenshots/android_settings_live.png" width="100%" alt="Budora Android Settings Screen" /><br>
       <em>Themes (Ocean, Sunset, Forest), auto-dismiss timers & battery alert thresholds.</em>
     </td>
   </tr>
@@ -65,17 +65,17 @@ Built for speed, pixel-perfect elegance, and zero background battery drain:
   <tr>
     <td align="center" width="50%">
       <strong>🖥️ Full Desktop Dashboard with GSMTC Media Player</strong><br><br>
-      <img src="docs/assets/screenshots/windows_dashboard.png" width="100%" alt="Windows Dashboard with Media Player" />
+      <img src="docs/assets/screenshots/windows_dashboard_live.png" width="100%" alt="Windows Dashboard with Media Player" />
     </td>
     <td align="center" width="50%">
       <strong>⚡ Floating Connect Flyout (TWS Earbuds Mode)</strong><br><br>
-      <img src="docs/assets/screenshots/windows_popup_tws.png" width="100%" alt="Windows Connect Popup TWS" />
+      <img src="docs/assets/screenshots/windows_popup_tws_live.png" width="100%" alt="Windows Connect Popup TWS" />
     </td>
   </tr>
   <tr>
     <td colspan="2" align="center">
       <strong>🔊 Universal Bluetooth Speaker Box Mode (WS-036 / Soundbox)</strong><br><br>
-      <img src="docs/assets/screenshots/windows_popup_speaker.png" width="55%" alt="Windows Speaker Mode Flyout" />
+      <img src="docs/assets/screenshots/windows_popup_speaker_live.png" width="55%" alt="Windows Speaker Mode Flyout" />
       <br>
       <em>Intelligent fallback: Detects active Bluetooth speakers/boxes without battery telemetry and displays clean single-gauge audio status.</em>
     </td>

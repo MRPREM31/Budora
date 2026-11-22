@@ -2,6 +2,7 @@ package com.budora.ui
 
 import android.Manifest
 import android.content.ComponentName
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
@@ -13,20 +14,33 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.BackHandler
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.budora.ble.BudoraModel
+import com.budora.ble.BudoraState
+import com.budora.data.BudoraConnection
 import com.budora.data.BudoraRepository
+import com.budora.data.LastCaseReading
 import com.budora.data.NowPlayingRepository
+import com.budora.data.PopupPosition
 import com.budora.data.SettingsStore
 import com.budora.service.BondReceiver
 import com.budora.service.BudoraMediaService
 import com.budora.service.BudoraService
+import com.budora.ui.overlay.ConnectPopupCard
 import com.budora.ui.theme.BudoraTheme
 import com.budora.ui.theme.resolve
 
@@ -42,9 +56,22 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val showSettingsState = mutableStateOf(false)
+    private val showPopupState = mutableStateOf(false)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        showSettingsState.value = intent.getBooleanExtra("open_settings", false)
+        showPopupState.value = intent.getBooleanExtra("open_popup", false)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        showSettingsState.value = intent?.getBooleanExtra("open_settings", false) == true
+        showPopupState.value = intent?.getBooleanExtra("open_popup", false) == true
 
         requestMissingPermissions()
         startBudoraServiceSafely()
@@ -64,9 +91,9 @@ class MainActivity : ComponentActivity() {
             }
 
             BudoraTheme(colorTheme = settings.colorTheme, darkTheme = isDark) {
-                // Two screens, one Activity; a navigation library would be
-                // ceremony for a readout and its options page.
-                var showSettings by rememberSaveable { mutableStateOf(false) }
+                var showSettings by showSettingsState
+                var showPopup by showPopupState
+
                 if (showSettings) {
                     BackHandler { showSettings = false }
                     SettingsScreen(
@@ -77,11 +104,45 @@ class MainActivity : ComponentActivity() {
                 } else {
                     val connection by BudoraRepository.state.collectAsState()
                     val deviceName by BudoraRepository.deviceName.collectAsState()
-                    BudoraScreen(
-                        connection = connection,
-                        onOpenSettings = { showSettings = true },
-                        deviceName = deviceName,
-                    )
+                    Box(Modifier.fillMaxSize()) {
+                        BudoraScreen(
+                            connection = connection,
+                            onOpenSettings = { showSettings = true },
+                            deviceName = deviceName,
+                        )
+                        if (showPopup) {
+                            val liveConn = connection as? BudoraConnection.Live
+                            val pState = liveConn?.state ?: BudoraState(
+                                model = BudoraModel.AIRPODS_PRO,
+                                leftBattery = 85,
+                                rightBattery = 85,
+                                caseBattery = 70,
+                                isLeftCharging = false,
+                                isRightCharging = false,
+                                isCaseCharging = false,
+                                isLidOpen = true,
+                                lidOpenCounter = 1,
+                                rawLeftInEar = false,
+                                rawRightInEar = false,
+                            )
+                            val pVisible = remember { MutableTransitionState(true) }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp, vertical = 32.dp),
+                                contentAlignment = if (settings.popupPosition == PopupPosition.TOP) Alignment.TopCenter else Alignment.BottomCenter
+                            ) {
+                                ConnectPopupCard(
+                                    state = pState,
+                                    lastCase = liveConn?.lastCase ?: LastCaseReading(70, false, System.currentTimeMillis()),
+                                    position = settings.popupPosition,
+                                    visibleState = pVisible,
+                                    onDismiss = { showPopup = false },
+                                    deviceName = deviceName ?: "CMF Buds 2a"
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
