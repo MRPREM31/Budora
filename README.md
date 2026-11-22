@@ -245,6 +245,45 @@ OK
 
 ---
 
+## 🤝 Contributing & Community (Pull Requests Welcome!)
+
+**Budora is 100% open-source and built for the community!**  
+Whether you want to fix a bug, optimize battery efficiency, enhance the UI, or add support for newly launched earbuds and Bluetooth speakers --- **anyone is warmly invited to contribute and improve the software for everyone!**
+
+Every pull request, issue report, and suggestion makes Budora more reliable and capable for users worldwide.
+
+### 💡 How You Can Help
+- 🐛 **Bug Hunting \& Fixes:** Discovered a UI glitch, connectivity edge-case, or crash? Report it via [GitHub Issues](https://github.com/MRPREM31/Budora/issues) or submit a direct code fix.
+- 🎧 **Device Protocols \& Telemetry:** Add support for new Google Fast Pair accessories, Apple beacon models, or proprietary Bluetooth GATT services.
+- 🎨 **UI / UX Polish:** Enhance Windows 11 animations, design new Android color themes, or improve home screen widget layouts.
+- 🌐 **Documentation \& Localization:** Improve guides, translate the interface into more languages, or expand the user manual.
+
+### 🚀 Quick Start for Contributors:
+1. **Fork the Repository:** Click the **Fork** button at the top-right of this repository.
+2. **Clone your fork locally:**
+   ```bash
+   git clone https://github.com/<your-username>/Budora.git
+   cd Budora
+   ```
+3. **Create a dedicated feature branch:**
+   ```bash
+   git checkout -b feature/improve-telemetry
+   ```
+4. **Make your improvements and test:**
+   - Test Windows backend: `python -m unittest windows/test_budora.py`
+   - Test Android build: `./gradlew test`
+5. **Commit with a descriptive message:**
+   ```bash
+   git commit -m "feat: add battery telemetry support for boAt Airdopes XYZ"
+   ```
+6. **Push to your fork:**
+   ```bash
+   git push origin feature/improve-telemetry
+   ```
+7. **Submit a Pull Request (PR):** Navigate to [Pull Requests](https://github.com/MRPREM31/Budora/pulls) on the main repository, click **New Pull Request**, and outline what you changed. We actively review, test, and merge community contributions!
+
+---
+
 ## 💖 Support & Donate
 
 If **Budora** enhances your daily audio and workflow experience, consider supporting our ongoing development:
@@ -274,6 +313,7 @@ Copyright (c) 2026 [**Prem Prasad Pradhan**](https://mrprem.in/) — a [**Zenemo
   <a href="https://www.zenemoo.in/">🌐 Official Website</a> &bull;
   <a href="https://mrprem.in/">👨‍💻 Founder Portfolio</a> &bull;
   <a href="docs/Budora_User_Manual.pdf">📖 Official User Manual (PDF)</a> &bull;
+  <a href="https://github.com/MRPREM31/Budora/pulls">🤝 Contribute & PRs</a> &bull;
   <a href="https://www.zenemoo.in/support-zenemooindia">💖 Support & Donate</a> &bull;
   <a href="https://github.com/MRPREM31/Budora/issues">🐛 Report an Issue</a>
 </p>
