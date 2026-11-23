@@ -1,4 +1,4 @@
-﻿package com.budora.ble
+package com.budora.ble
 
 /**
  * Decides which nearby AirPods are *yours* when several are broadcasting.
