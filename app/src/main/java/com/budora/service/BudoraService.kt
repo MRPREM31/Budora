@@ -607,10 +607,14 @@ class BudoraService : Service() {
         if (level !in 0..100) return
         val current = latestState
         val caseLevel = current?.caseBattery ?: latestCase?.level ?: caseMemory.last?.level
+        val timePred = tracker.predict("classic_bt_audio", level, false)
         val updated = current?.copy(
             leftBattery = level,
             rightBattery = level,
-            caseBattery = caseLevel
+            caseBattery = caseLevel,
+            leftTimeRemaining = timePred,
+            rightTimeRemaining = timePred,
+            singleTimeRemaining = timePred,
         ) ?: BudoraState(
             model = BudoraModel.GENERIC_BLUETOOTH,
             leftBattery = level,
@@ -623,6 +627,9 @@ class BudoraService : Service() {
             lidOpenCounter = 0,
             rawLeftInEar = false,
             rawRightInEar = false,
+            leftTimeRemaining = timePred,
+            rightTimeRemaining = timePred,
+            singleTimeRemaining = timePred,
         )
         latestState = updated
         val lastCase = latestCase ?: caseMemory.last
@@ -675,10 +682,17 @@ class BudoraService : Service() {
             (latestState?.rightBattery == null && latestState?.leftBattery != null)
         )
 
+        val leftBat = if (isSingle) mainBattery else (latestState?.leftBattery ?: mainBattery)
+        val rightBat = if (isSingle) null else (latestState?.rightBattery ?: mainBattery)
+
+        val leftTime = tracker.predict("${device.address}_L", leftBat, isLeftChg)
+        val rightTime = if (rightBat != null) tracker.predict("${device.address}_R", rightBat, isRightChg) else null
+        val singleTime = if (isSingle) tracker.predict("${device.address}_S", mainBattery, isLeftChg) else null
+
         return BudoraState(
             model = latestState?.model ?: BudoraModel.GENERIC_BLUETOOTH,
-            leftBattery = if (isSingle) mainBattery else (latestState?.leftBattery ?: mainBattery),
-            rightBattery = if (isSingle) null else (latestState?.rightBattery ?: mainBattery),
+            leftBattery = leftBat,
+            rightBattery = rightBat,
             caseBattery = if (isSingle) null else liveCase,
             isLeftCharging = isLeftChg,
             isRightCharging = isRightChg,
@@ -690,6 +704,9 @@ class BudoraService : Service() {
             isSingleDevice = isSingle,
             isLeftInCase = leftInCase,
             isRightInCase = rightInCase,
+            leftTimeRemaining = leftTime,
+            rightTimeRemaining = rightTime,
+            singleTimeRemaining = singleTime,
         )
     }
 
