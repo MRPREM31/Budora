@@ -36,6 +36,7 @@ fun HeadphoneBatteryCard(
     ringDiameter: Dp,
     numberSize: TextUnit,
     modifier: Modifier = Modifier,
+    timeRemaining: String? = null,
     refreshTrigger: Int = 0,
 ) {
     val color = batteryColor(level)
@@ -94,6 +95,16 @@ fun HeadphoneBatteryCard(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             letterSpacing = Dimens.LabelTracking,
         )
+        if (!timeRemaining.isNullOrBlank() && level != null && level > 0) {
+            Spacer(Modifier.height(3.dp))
+            Text(
+                text = timeRemaining,
+                style = MaterialTheme.typography.labelSmall,
+                fontSize = 12.sp,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
         Spacer(Modifier.height(4.dp))
         Box(
             Modifier

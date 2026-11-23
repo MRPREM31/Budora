@@ -153,6 +153,7 @@ fun ConnectPopupCard(
                         icon = AppIcons.Headphones,
                         level = level,
                         isCharging = isCharging,
+                        timeRemaining = state.singleTimeRemaining,
                         modifier = Modifier.fillMaxWidth(),
                     )
                 } else {
@@ -166,6 +167,7 @@ fun ConnectPopupCard(
                             level = state.leftBattery,
                             isCharging = state.isLeftCharging,
                             isInCase = state.isLeftInCase,
+                            timeRemaining = state.leftTimeRemaining,
                             modifier = Modifier.weight(1f),
                         )
                         LevelTile(
@@ -174,6 +176,7 @@ fun ConnectPopupCard(
                             level = state.rightBattery,
                             isCharging = state.isRightCharging,
                             isInCase = state.isRightInCase,
+                            timeRemaining = state.rightTimeRemaining,
                             modifier = Modifier.weight(1f),
                         )
                         // Out of the case the beacon cannot report its level, so
@@ -369,6 +372,7 @@ private fun LevelTile(
     isRemembered: Boolean = false,
     isCase: Boolean = false,
     isInCase: Boolean = false,
+    timeRemaining: String? = null,
 ) {
     val color = if (isCase) caseColor(level) else batteryColor(level)
     val description = buildString {
@@ -419,6 +423,16 @@ private fun LevelTile(
                 color = if (isInCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                 letterSpacing = 0.8.sp,
             )
+            if (!timeRemaining.isNullOrBlank() && level != null && level > 0 && !isInCase) {
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    text = timeRemaining,
+                    style = MaterialTheme.typography.labelSmall,
+                    fontSize = 8.5.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
     }
 }

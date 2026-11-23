@@ -319,6 +319,7 @@ private fun LiveReadout(
                 isCharging = isCharging,
                 ringDiameter = ringDiameter,
                 numberSize = numberSize,
+                timeRemaining = state.singleTimeRemaining,
                 refreshTrigger = refreshTrigger,
             )
         } else {
@@ -333,6 +334,7 @@ private fun LiveReadout(
                     isCharging = state.isLeftCharging,
                     ringDiameter = ringDiameter,
                     numberSize = numberSize,
+                    timeRemaining = state.leftTimeRemaining,
                     isInCase = state.isLeftInCase,
                     refreshTrigger = refreshTrigger,
                 )
@@ -343,6 +345,7 @@ private fun LiveReadout(
                     isCharging = state.isRightCharging,
                     ringDiameter = ringDiameter,
                     numberSize = numberSize,
+                    timeRemaining = state.rightTimeRemaining,
                     isInCase = state.isRightInCase,
                     refreshTrigger = refreshTrigger,
                 )
