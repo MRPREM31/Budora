@@ -90,6 +90,10 @@ class BudoraTracker(
     private var incumbentAddress: String? = null
     private val predictor = BatteryPredictor()
 
+    fun predict(channelId: String, level: Int?, isCharging: Boolean): String? {
+        return predictor.predict(channelId, level, isCharging, nowMs())
+    }
+
     /**
      * Record one decoded advertisement.
      *

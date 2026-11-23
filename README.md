@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/Language-Kotlin%20%7C%20Python%203.11-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin & Python">
   <img src="https://img.shields.io/badge/UI-Jetpack%20Compose%20%7C%20PySide6-4285F4?logo=jetpackcompose&logoColor=white" alt="Compose & Qt">
   <img src="https://img.shields.io/badge/Bluetooth-BLE%20%2B%20Fast%20Pair-0082FC?logo=bluetooth&logoColor=white" alt="Bluetooth LE">
-  <a href="docs/Budora_User_Manual.pdf"><img src="https://img.shields.io/badge/User%20Manual-PDF%20Download-orange?logo=adobeacrobatreader&logoColor=white" alt="User Manual PDF"></a>
+  <a href="docs/Budora_User_Manual_v2.0.0.pdf"><img src="https://img.shields.io/badge/User%20Manual-v2.0.0%20PDF-orange?logo=adobeacrobatreader&logoColor=white" alt="User Manual PDF"></a>
   <img src="https://img.shields.io/badge/Privacy-100%25%20Offline-green" alt="100% Offline">
   <img src="https://img.shields.io/badge/License-MIT-blue" alt="MIT License">
 </p>
@@ -25,7 +25,7 @@ Both Windows and Android treat wireless earbuds and Bluetooth audio gear as gene
 **Budora** solves this permanently across both desktop and mobile. 
 
 > [!TIP]
-> 📖 **Comprehensive Device Guide & Manual:** Download the [**Official Budora User Manual (PDF)**](docs/Budora_User_Manual.pdf) for the full 400+ device compatibility matrix (CMF, boAt, AirPods, Sony, JBL, Bose, Pixel Buds), protocol decoders, and step-by-step setup guides. 
+> 📖 **Comprehensive Device Guide & Manual:** Download the [**Official Budora User Manual v2.0.0 (PDF)**](docs/Budora_User_Manual_v2.0.0.pdf) (or [v1.0.0](docs/Budora_User_Manual.pdf)) for the full 400+ device compatibility matrix (CMF, boAt, AirPods, Sony, JBL, Bose, Pixel Buds), mathematical battery life prediction engine, protocol decoders, and step-by-step setup guides. 
 
 Built for speed, pixel-perfect elegance, and zero background battery drain:
 - On **Windows**, Budora operates as a lightweight System Tray companion featuring a Windows 11 Fluent floating connect flyout, interactive speedometer rev-up battery rings, live Global System Media Transport (GSMTC) media player controls, and smart fallback detection for classic Bluetooth speakers.
@@ -224,8 +224,10 @@ Budora/
 ├── docs/
 │   ├── assets/screenshots/      # High-resolution showcase screenshots (Android & Windows)
 │   ├── TECHNICAL.md             # In-depth Bluetooth protocol & telemetry architecture docs
-│   ├── Budora_User_Manual.pdf   # Official User Manual & Device Telemetry Guide (PDF)
-│   └── USER_MANUAL.tex          # Complete LaTeX source code for the User Manual
+│   ├── Budora_User_Manual_v2.0.0.pdf # Official User Manual v2.0.0 with Battery Prediction (PDF)
+│   ├── Budora_User_Manual.pdf   # Official User Manual v1.0.0 (PDF)
+│   ├── USER_MANUAL_v2.0.0.tex   # LaTeX source code for User Manual v2.0.0
+│   └── USER_MANUAL.tex          # LaTeX source code for User Manual
 ├── run.bat                      # One-click Windows application launcher
 ├── build.gradle.kts             # Root Gradle build script
 ├── settings.gradle.kts          # Gradle project configuration
@@ -319,7 +321,7 @@ Copyright (c) 2026 [**Prem Prasad Pradhan**](https://mrprem.in/) — a [**Zenemo
 <p align="center">
   <a href="https://www.zenemoo.in/">🌐 Official Website</a> &bull;
   <a href="https://mrprem.in/">👨‍💻 Founder Portfolio</a> &bull;
-  <a href="docs/Budora_User_Manual.pdf">📖 Official User Manual (PDF)</a> &bull;
+  <a href="docs/Budora_User_Manual_v2.0.0.pdf">📖 Official User Manual v2.0.0 (PDF)</a> &bull;
   <a href="https://github.com/MRPREM31/Budora/pulls">🤝 Contribute & PRs</a> &bull;
   <a href="https://www.zenemoo.in/support-zenemooindia">💖 Support & Donate</a> &bull;
   <a href="https://github.com/MRPREM31/Budora/issues">🐛 Report an Issue</a>
