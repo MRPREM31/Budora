@@ -116,26 +116,32 @@ def main():
     prev_connected = False
     prev_lid_open = False
     last_popup_time = 0.0
+    disconnected_since = time.time()
 
     @Slot(BudoraState)
     def handle_state(state: BudoraState):
-        nonlocal prev_connected, prev_lid_open, last_popup_time
+        nonlocal prev_connected, prev_lid_open, last_popup_time, disconnected_since
         tray.update_state(state)
         popup.update_state(state)
         main_win.update_state(state)
 
-        # Auto-popup cleanly on initial connect or when lid opens
-        if settings.get("showConnectPopup", True) and state.is_connected:
-            now = time.time()
-            became_connected = (not prev_connected and state.is_connected)
+        now = time.time()
+        if not state.is_connected:
+            if disconnected_since is None:
+                disconnected_since = now
+            prev_connected = False
+        else:
+            became_connected = (disconnected_since is not None and (now - disconnected_since >= 5.0))
             lid_just_opened = (not prev_lid_open and state.is_lid_open)
 
-            if (became_connected or lid_just_opened) and (now - last_popup_time > 8.0):
+            if (became_connected or lid_just_opened) and (now - last_popup_time > 15.0):
                 last_popup_time = now
-                popup.show_animated()
+                if settings.get("showConnectPopup", True):
+                    popup.show_animated()
 
-        prev_connected = state.is_connected
-        prev_lid_open = state.is_lid_open
+            disconnected_since = None
+            prev_connected = True
+            prev_lid_open = state.is_lid_open
 
     bridge.state_received.connect(handle_state)
 

@@ -192,7 +192,7 @@ class BudoraTracker:
     Smart Case Memory to remember case battery levels, and actively emits
     disconnected states when Bluetooth disconnects.
     """
-    CANDIDATE_TTL_SEC = 8.0
+    CANDIDATE_TTL_SEC = 30.0
     SWITCH_MARGIN_DB = 5
     MEMORY_TTL_SEC = 86400.0
 
@@ -214,6 +214,9 @@ class BudoraTracker:
         self._last_case_seen_at: float = settings.get("last_case_seen_at", 0.0)
         self._fallback_device: Optional[str] = None
         self._predictor = BatteryPredictor()
+        self._last_pred_l: Optional[str] = None
+        self._last_pred_r: Optional[str] = None
+        self._last_pred_s: Optional[str] = None
 
     def on_advertisement(self, address: str, rssi: int, state: BudoraState, now: Optional[float] = None) -> Optional[BudoraState]:
         if now is None:
@@ -270,18 +273,29 @@ class BudoraTracker:
                 state.case_is_memorized = True
 
         # Compute Active Battery Time Predictions
-        state.left_time_remaining = self._predictor.predict(
+        pred_l = self._predictor.predict(
             f"{address}_left", state.left_battery, state.is_left_charging, now=now
         )
-        state.right_time_remaining = self._predictor.predict(
+        if pred_l:
+            self._last_pred_l = pred_l
+        state.left_time_remaining = pred_l or self._last_pred_l
+
+        pred_r = self._predictor.predict(
             f"{address}_right", state.right_battery, state.is_right_charging, now=now
         )
+        if pred_r:
+            self._last_pred_r = pred_r
+        state.right_time_remaining = pred_r or self._last_pred_r
+
         if state.is_single_device:
             single_val = state.left_battery if state.left_battery is not None else state.right_battery
             single_chg = state.is_left_charging or state.is_right_charging
-            state.single_time_remaining = self._predictor.predict(
+            pred_s = self._predictor.predict(
                 f"{address}_single", single_val, single_chg, now=now
             )
+            if pred_s:
+                self._last_pred_s = pred_s
+            state.single_time_remaining = pred_s or self._last_pred_s
 
         if address in self._candidates:
             c = self._candidates[address]

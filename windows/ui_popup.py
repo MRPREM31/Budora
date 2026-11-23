@@ -454,3 +454,16 @@ class BudoraPopupWindow(QWidget):
             self.hide_timer.start()
         else:
             self.hide_timer.stop()
+
+    def enterEvent(self, event):
+        # Pause auto-dismiss timer while user hovers over popup
+        self.hide_timer.stop()
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        # Resume auto-dismiss timer when mouse leaves
+        timeout_sec = settings.get("popupTimeoutSeconds", 8)
+        if timeout_sec > 0:
+            self.hide_timer.setInterval(timeout_sec * 1000)
+            self.hide_timer.start()
+        super().leaveEvent(event)
