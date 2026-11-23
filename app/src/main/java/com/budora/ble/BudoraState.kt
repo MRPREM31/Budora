@@ -30,6 +30,10 @@ data class BudoraState(
     val isSingleDevice: Boolean = false,
     val isLeftInCase: Boolean = false,
     val isRightInCase: Boolean = false,
+    val leftTimeRemaining: String? = null,
+    val rightTimeRemaining: String? = null,
+    val caseTimeRemaining: String? = null,
+    val singleTimeRemaining: String? = null,
 ) {
     val isKnownModel: Boolean get() = BudoraModel.isKnownModel(model)
 }

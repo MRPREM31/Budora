@@ -17,6 +17,65 @@
  *
  * Not thread-safe; call from a single scan callback thread.
  */
+class BatteryPredictor(private val alpha: Float = 0.35f) {
+    private class Channel(
+        val samples: MutableList<Pair<Long, Int>> = mutableListOf(),
+        var smoothedRate: Float = 18f,
+        var lastCharging: Boolean = false,
+    )
+    private val channels = mutableMapOf<String, Channel>()
+
+    fun predict(channelId: String, level: Int?, isCharging: Boolean, nowMs: Long = System.currentTimeMillis()): String? {
+        if (level == null || level <= 0) return null
+        if (isCharging) {
+            val missing = (100 - level).coerceAtLeast(0)
+            if (missing <= 2) return "⚡ Fully Charged"
+            val mins = ((missing / 100f) * 55).toInt().coerceAtLeast(5)
+            return if (mins >= 60) {
+                val h = mins / 60
+                val m = mins % 60
+                if (m > 0) "⚡ Full in ~${h}h ${m}m" else "⚡ Full in ~${h}h"
+            } else {
+                "⚡ Full in ~${mins}m"
+            }
+        }
+        val ch = channels.getOrPut(channelId) { Channel() }
+        if (ch.lastCharging) {
+            ch.samples.clear()
+            ch.smoothedRate = 18f
+        }
+        ch.lastCharging = false
+
+        if (ch.samples.isEmpty() || ch.samples.last().second != level || (nowMs - ch.samples.last().first) > 60_000L) {
+            ch.samples.add(nowMs to level)
+            if (ch.samples.size > 20) ch.samples.removeAt(0)
+        }
+
+        if (ch.samples.size >= 2) {
+            val dtHours = (ch.samples.last().first - ch.samples.first().first) / 3_600_000f
+            val db = ch.samples.first().second - ch.samples.last().second
+            if (dtHours > (45f / 3600f) && db > 0) {
+                val instantRate = (db / dtHours).coerceIn(2f, 50f)
+                ch.smoothedRate = alpha * instantRate + (1f - alpha) * ch.smoothedRate
+            }
+        }
+
+        val rate = ch.smoothedRate.coerceAtLeast(4f)
+        val hoursLeft = level / rate
+        val totalMinutes = (hoursLeft * 60).toInt()
+
+        return when {
+            totalMinutes < 15 -> "Low (<15m)"
+            totalMinutes < 60 -> "~ ${totalMinutes}m left"
+            else -> {
+                val h = totalMinutes / 60
+                val m = totalMinutes % 60
+                if (m < 5) "~ ${h}h left" else "~ ${h}h ${m}m left"
+            }
+        }
+    }
+}
+
 class BudoraTracker(
     private val nowMs: () -> Long = System::currentTimeMillis,
 ) {
@@ -29,6 +88,7 @@ class BudoraTracker(
 
     private val candidates = mutableMapOf<String, Candidate>()
     private var incumbentAddress: String? = null
+    private val predictor = BatteryPredictor()
 
     /**
      * Record one decoded advertisement.
@@ -39,12 +99,22 @@ class BudoraTracker(
     fun onAdvertisement(address: String, rssi: Int, state: BudoraState): BudoraState? {
         val now = nowMs()
 
+        val enriched = state.copy(
+            leftTimeRemaining = predictor.predict("${address}_L", state.leftBattery, state.isLeftCharging, now),
+            rightTimeRemaining = predictor.predict("${address}_R", state.rightBattery, state.isRightCharging, now),
+            singleTimeRemaining = if (state.isSingleDevice) {
+                val lvl = state.leftBattery ?: state.rightBattery
+                val chg = state.isLeftCharging || state.isRightCharging
+                predictor.predict("${address}_S", lvl, chg, now)
+            } else null
+        )
+
         candidates[address]?.also {
             it.rssi = rssi
-            it.state = state
+            it.state = enriched
             it.lastSeenMs = now
         } ?: run {
-            candidates[address] = Candidate(address, rssi, state, now)
+            candidates[address] = Candidate(address, rssi, enriched, now)
         }
 
         expireStale(now)

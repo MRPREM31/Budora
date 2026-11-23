@@ -118,6 +118,13 @@ Built for speed, pixel-perfect elegance, and zero background battery drain:
 - **Launcher Widget:** 4x2 responsive home screen widget with one-tap quick flyout summon.
 - **Status Bar Alerts:** Heads-up alerts when any pod drops below 20% or reaches critical low (10%).
 
+### ⏱️ 6. Mathematical Battery Life Prediction Engine
+- **Discharge Slope Modeling:** Dynamically calculates active battery operating time remaining using an Exponentially Weighted Moving Average (EWMA):
+  $$\text{Time Remaining} = \frac{B_{\text{current}}}{R_{\text{smoothed}}}$$
+- **State-Aware Power Profiles:** Differentiates between active audio streaming ($\approx 18\%/\text{hr}$) and idle standby ($\approx 4\%/\text{hr}$).
+- **Intelligent Charge Estimation:** When earbuds or the case are docked to power, predicts exact minutes to 100% saturation (e.g., `⚡ Full in ~35m`).
+- **Real-Time Display:** Rendered directly under each battery card on both the Windows flyout and desktop dashboard (e.g., `~ 3h 45m left`).
+
 ---
 
 ## 🚀 Quick Start & Installation

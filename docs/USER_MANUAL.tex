@@ -294,23 +294,68 @@ Open Settings by tapping the gear icon (\texttt{\#990, 297}) in the top-right he
 \end{itemize}
 
 % ==============================================================================
+\section{Mathematical Battery Life Prediction Engine}
+% ==============================================================================
+
+Budora 2.0 incorporates a real-time mathematical battery discharge modeling engine that calculates the exact active operational time remaining before the device requires recharging. Because Bluetooth telemetry typically broadcasts battery levels in coarse $10\%$ quantizations, Budora employs an \textbf{Exponentially Weighted Moving Average (EWMA)} filter over telemetry time intervals to eliminate noise, jitter, and erratic estimations.
+
+\subsection{Mathematical Formulation}
+
+\begin{enumerate}
+    \item \textbf{Instantaneous Discharge Slope ($\Delta B / \Delta t$):}
+    Let $B_0$ denote the baseline battery percentage recorded at timestamp $t_0$, and $B_t$ denote the current battery reading at timestamp $t$. The instantaneous discharge rate $R_{\text{instant}}$ in percent per hour is defined as:
+    \begin{equation}
+        R_{\text{instant}} = \frac{B_0 - B_t}{\Delta t} \quad \left[\% / \text{hour}\right]
+    \end{equation}
+    where $\Delta t = (t - t_0) / 3600$.
+
+    \item \textbf{Exponentially Weighted Moving Average (EWMA) Smoothing:}
+    To prevent instantaneous fluctuations from distorting the prediction (such as when volume peaks momentarily or during telemetry quantization steps), the rate is filtered using a smoothing factor $\alpha \in [0, 1]$ (calibrated to $\alpha = 0.35$):
+    \begin{equation}
+        R_{\text{smoothed}}^{(k)} = \alpha \cdot R_{\text{instant}} + (1 - \alpha) \cdot R_{\text{smoothed}}^{(k-1)}
+    \end{equation}
+
+    \item \textbf{Estimated Active Time Remaining ($T_{\text{remaining}}$):}
+    The projected active operating duration until depletion ($B = 0\%$) is calculated as:
+    \begin{equation}
+        T_{\text{remaining}} = \frac{B_{\text{current}}}{R_{\text{smoothed}}} \quad [\text{hours}]
+    \end{equation}
+    which the UI dynamically formats into human-readable strings (e.g., \texttt{\~{} 3h 45m left} or \texttt{\~{} 45m left}).
+\end{enumerate}
+
+\subsection{State-Dependent Operational Profiles}
+
+The prediction engine continuously evaluates active media transport telemetry (via Windows GSMTC and Android MediaSession) to apply dynamic power consumption baselines:
+\begin{itemize}
+    \item \textbf{Active Audio Streaming Profile:} When music or active phone calls are detected, the baseline power consumption rate scales to $\approx 16\% - 20\%$ per hour (corresponding to typical $5 - 6$ hour TWS listening cycles).
+    \item \textbf{Idle Standby Profile:} When connected in standby mode without active media decode, the baseline rate settles to $\approx 2.5\% - 4\%$ per hour (providing upwards of $25 - 40$ hours of standby longevity).
+    \item \textbf{Charge Acceleration Estimation:} When the earbud or case charging flag ($C = 1$) is active, the engine switches to charge modeling, displaying projected time until 100\% saturation:
+    \begin{equation}
+        T_{\text{to\_full}} = \frac{100 - B_{\text{current}}}{R_{\text{charge}}}
+    \end{equation}
+    rendering directly on the card as \texttt{\lightning{} Full in \~{}35m}.
+\end{itemize}
+
+% ==============================================================================
 \section{Windows Desktop Operations Guide}
 % ==============================================================================
 
 \subsection{Quick Launch \& Standalone Execution}
 \begin{enumerate}
-    \item \textbf{One-Click Launch:} Double-click \texttt{run.bat} located in the Budora root directory. The script resolves local Python 3.11 executables and boots \texttt{windows/main.py} in background mode.
-    \item \textbf{Manual Startup:}
+    \item \textbf{Direct Standalone Application (\texttt{Budora.exe}):} Simply download and double-click \texttt{Budora.exe} from the GitHub release. It runs completely standalone without requiring Python, scripts, or terminal windows.
+    \item \textbf{Script-Based Launch (\texttt{run.bat}):} Double-click \texttt{run.bat} located in the Budora directory. The batch script dynamically locates local Python installations and boots \texttt{windows/main.py} in background mode.
+    \item \textbf{Manual Developer Startup:}
     \begin{lstlisting}[language=bash]
 cd windows
 python main.py
     \end{lstlisting}
-    \item \textbf{Single-Instance Guard:} Budora utilizes a local IPC socket (\texttt{Budora\_SingleInstance\_IPC\_Socket}). Launching \texttt{run.bat} while an instance is already active brings the existing dashboard immediately to the foreground.
+    \item \textbf{Single-Instance Guard:} Budora utilizes a local IPC socket (\texttt{BudoraApp\_SingleInstance\_IPC}). Launching a second instance automatically signals the existing active window to the foreground without spawning duplicate processes.
 \end{enumerate}
 
 \subsection{Desktop Features}
 \begin{itemize}
     \item \textbf{Fluent Floating Connect Flyout:} Pops up smoothly in the bottom-right corner above the Windows taskbar whenever your earbuds or speaker connect.
+    \item \textbf{Active Battery Time Prediction:} Renders dynamic remaining operating hours (e.g., \texttt{\~{} 3h 45m left} or \texttt{\lightning{} Full in \~{}30m}) directly below the battery percentage in cards.
     \item \textbf{Speedometer Rev-Up Animation:} Circular vector gauges smoothly animate from 0\% up to target telemetry values upon appearance.
     \item \textbf{System Tray Companion:} Minimises to the Windows notification tray. Left-click toggles the main window; right-click opens the context menu (Settings, Re-scan, Disconnect, Exit).
     \item \textbf{Windows GSMTC Media Integration:} Queries Windows Global System Media Transport Controls to display track title, artist, album thumbnail, and playback transport controls (Play, Pause, Next, Previous) directly inside the desktop dashboard.

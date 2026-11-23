@@ -109,6 +109,82 @@ def get_connected_bluetooth_audio() -> Optional[str]:
         return candidates[0][1]
     return None
 
+class BatteryPredictor:
+    """
+    Mathematical battery life predictor for Bluetooth devices.
+    Tracks discharge rate (% per hour) using Exponentially Weighted Moving Average (EWMA).
+    Formula:
+      Discharge Rate R = ΔB / Δt (%/hr)
+      R_smoothed = α * R_instant + (1 - α) * R_smoothed
+      Time Remaining = Current Battery / R_smoothed
+    """
+    def __init__(self, alpha: float = 0.35):
+        self.alpha = alpha
+        self._channels: Dict[str, dict] = {}
+
+    def predict(self, channel_id: str, current_level: Optional[int], is_charging: bool, is_audio_active: bool = False, now: Optional[float] = None) -> Optional[str]:
+        if current_level is None or current_level <= 0:
+            return None
+
+        if is_charging:
+            missing = max(0, 100 - current_level)
+            if missing <= 2:
+                return "⚡ Fully Charged"
+            mins = max(5, int((missing / 100.0) * 55))
+            if mins >= 60:
+                h = mins // 60
+                m = mins % 60
+                return f"⚡ Full in ~{h}h {m}m" if m else f"⚡ Full in ~{h}h"
+            return f"⚡ Full in ~{mins}m"
+
+        if now is None:
+            now = time.time()
+
+        ch = self._channels.setdefault(channel_id, {
+            "samples": [],
+            "smoothed_rate": 18.0 if is_audio_active else 5.0,
+            "last_charging": False
+        })
+
+        if ch["last_charging"]:
+            ch["samples"] = []
+            ch["smoothed_rate"] = 18.0 if is_audio_active else 5.0
+        ch["last_charging"] = False
+
+        samples = ch["samples"]
+        if not samples or samples[-1][1] != current_level or (now - samples[-1][0]) > 60:
+            samples.append((now, current_level))
+            if len(samples) > 20:
+                samples.pop(0)
+
+        if len(samples) >= 2:
+            dt_hours = (samples[-1][0] - samples[0][0]) / 3600.0
+            db = samples[0][1] - samples[-1][1]
+            if dt_hours > (45.0 / 3600.0) and db > 0:
+                instant_rate = db / dt_hours
+                instant_rate = max(2.0, min(50.0, instant_rate))
+                ch["smoothed_rate"] = self.alpha * instant_rate + (1 - self.alpha) * ch["smoothed_rate"]
+
+        rate = ch["smoothed_rate"]
+        if is_audio_active and rate < 12.0:
+            rate = 14.0
+        if rate <= 0.1:
+            rate = 4.0
+
+        hours_left = current_level / rate
+        total_minutes = int(hours_left * 60)
+
+        if total_minutes < 15:
+            return "Low battery (<15m)"
+        elif total_minutes < 60:
+            return f"~ {total_minutes}m left"
+        else:
+            h = total_minutes // 60
+            m = total_minutes % 60
+            if m < 5:
+                return f"~ {h}h left"
+            return f"~ {h}h {m}m left"
+
 class BudoraTracker:
     """
     Arbitrates candidate Bluetooth devices to pick the user's earbuds.
@@ -137,6 +213,7 @@ class BudoraTracker:
         self._last_case_battery: Optional[int] = settings.get("last_case_battery", 95)
         self._last_case_seen_at: float = settings.get("last_case_seen_at", 0.0)
         self._fallback_device: Optional[str] = None
+        self._predictor = BatteryPredictor()
 
     def on_advertisement(self, address: str, rssi: int, state: BudoraState, now: Optional[float] = None) -> Optional[BudoraState]:
         if now is None:
@@ -191,6 +268,20 @@ class BudoraTracker:
                 # Apply Smart Case Memory so the case displays last verified level
                 state.case_battery = self._last_case_battery
                 state.case_is_memorized = True
+
+        # Compute Active Battery Time Predictions
+        state.left_time_remaining = self._predictor.predict(
+            f"{address}_left", state.left_battery, state.is_left_charging, now=now
+        )
+        state.right_time_remaining = self._predictor.predict(
+            f"{address}_right", state.right_battery, state.is_right_charging, now=now
+        )
+        if state.is_single_device:
+            single_val = state.left_battery if state.left_battery is not None else state.right_battery
+            single_chg = state.is_left_charging or state.is_right_charging
+            state.single_time_remaining = self._predictor.predict(
+                f"{address}_single", single_val, single_chg, now=now
+            )
 
         if address in self._candidates:
             c = self._candidates[address]

@@ -203,6 +203,12 @@ class EarbudCard(QFrame):
         self.lbl_tag.setStyleSheet("font-size: 10px; font-weight: 700; color: #8D92A8; letter-spacing: 1.1px;")
         layout.addWidget(self.lbl_tag, alignment=Qt.AlignmentFlag.AlignCenter)
 
+        self.lbl_predict = QLabel("")
+        self.lbl_predict.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_predict.setStyleSheet("font-size: 10px; font-weight: 600; color: #6FD0F5; margin-top: 1px;")
+        self.lbl_predict.hide()
+        layout.addWidget(self.lbl_predict, alignment=Qt.AlignmentFlag.AlignCenter)
+
         self.badge_in_case = QLabel("⚡ DOCKED IN CASE")
         self.badge_in_case.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.badge_in_case.setStyleSheet("""
@@ -222,7 +228,7 @@ class EarbudCard(QFrame):
         self.lbl_level.setText(f"{int(val)}%")
         self.lbl_level.setStyleSheet(f"font-size: 22px; font-weight: 800; color: {c};")
 
-    def set_state(self, level, is_charging, is_in_case=False, animate=False):
+    def set_state(self, level, is_charging, is_in_case=False, animate=False, time_remaining=None):
         self.ring.update_val(level, is_charging=is_charging, is_case=False, animate=animate)
         if is_in_case:
             self.opacity_effect.setOpacity(0.40)
@@ -230,6 +236,13 @@ class EarbudCard(QFrame):
         else:
             self.opacity_effect.setOpacity(1.0)
             self.badge_in_case.hide()
+
+        if time_remaining and level is not None and level > 0 and not is_in_case:
+            self.lbl_predict.setText(time_remaining)
+            self.lbl_predict.show()
+        else:
+            self.lbl_predict.setText("")
+            self.lbl_predict.hide()
 
         if level is None:
             self.lbl_level.setText("--")
@@ -275,6 +288,12 @@ class HeadphoneCard(QFrame):
         self.lbl_status.setStyleSheet("font-size: 11px; font-weight: 600; color: #3DDC84;")
         layout.addWidget(self.lbl_status, alignment=Qt.AlignmentFlag.AlignCenter)
 
+        self.lbl_predict = QLabel("")
+        self.lbl_predict.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_predict.setStyleSheet("font-size: 11px; font-weight: 600; color: #6FD0F5; margin-top: 2px;")
+        self.lbl_predict.hide()
+        layout.addWidget(self.lbl_predict, alignment=Qt.AlignmentFlag.AlignCenter)
+
     def set_device_name(self, name: str):
         low = name.lower()
         if any(k in low for k in ["speaker", "box", "sound", "stone", "bar", "ws-", "boom", "party"]):
@@ -287,8 +306,15 @@ class HeadphoneCard(QFrame):
         self.lbl_level.setText(f"{int(val)}%")
         self.lbl_level.setStyleSheet(f"font-size: 26px; font-weight: 800; color: {c};")
 
-    def set_state(self, level, is_charging, is_connected=True, animate=False):
+    def set_state(self, level, is_charging, is_connected=True, animate=False, time_remaining=None):
         self.ring.update_val(level, is_charging=is_charging, is_case=False, animate=animate)
+        if time_remaining and level is not None and level > 0:
+            self.lbl_predict.setText(time_remaining)
+            self.lbl_predict.show()
+        else:
+            self.lbl_predict.setText("")
+            self.lbl_predict.hide()
+
         if not is_connected:
             self.lbl_level.setText("--")
             self.lbl_level.setStyleSheet("font-size: 26px; font-weight: 800; color: #565A6E;")
@@ -1275,13 +1301,25 @@ class BudoraMainWindow(QMainWindow):
             self.card_headphone.set_device_name(state.device_name)
             lvl = state.left_battery or state.right_battery
             chg = state.is_left_charging or state.is_right_charging
-            self.card_headphone.set_state(lvl, chg, is_connected=state.is_connected)
+            self.card_headphone.set_state(
+                lvl, chg,
+                is_connected=state.is_connected,
+                time_remaining=state.single_time_remaining
+            )
         else:
             self.card_headphone.hide()
             self.buds_widget.show()
             self.card_case.show()
-            self.card_left.set_state(state.left_battery, state.is_left_charging, is_in_case=state.is_left_in_case)
-            self.card_right.set_state(state.right_battery, state.is_right_charging, is_in_case=state.is_right_in_case)
+            self.card_left.set_state(
+                state.left_battery, state.is_left_charging,
+                is_in_case=state.is_left_in_case,
+                time_remaining=state.left_time_remaining
+            )
+            self.card_right.set_state(
+                state.right_battery, state.is_right_charging,
+                is_in_case=state.is_right_in_case,
+                time_remaining=state.right_time_remaining
+            )
             self.card_case.set_state(state.case_battery, state.is_case_charging, state.is_lid_open, state.case_is_memorized)
 
     def update_media(self, data: dict):

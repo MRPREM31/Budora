@@ -53,6 +53,10 @@ class BudoraState:
     is_single_device: bool = False
     is_left_in_case: bool = False
     is_right_in_case: bool = False
+    left_time_remaining: Optional[str] = None
+    right_time_remaining: Optional[str] = None
+    case_time_remaining: Optional[str] = None
+    single_time_remaining: Optional[str] = None
 
     @property
     def model_name(self) -> str:

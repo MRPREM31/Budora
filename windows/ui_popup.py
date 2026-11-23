@@ -150,16 +150,29 @@ class ComponentCard(QFrame):
 
         self.lbl_pct = QLabel("--")
         self.lbl_pct.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.lbl_pct.setStyleSheet("color: #565A6E; font-size: 16px; font-weight: 800; margin-top: 2px;")
+        self.lbl_pct.setStyleSheet("color: #565A6E; font-size: 15px; font-weight: 800; margin-top: 1px;")
         layout.addWidget(self.lbl_pct)
 
-    def set_state(self, level, is_charging, is_memorized=False, is_in_case=False, animate=False, force_blank=False):
+        self.lbl_time = QLabel("")
+        self.lbl_time.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_time.setStyleSheet("color: #8D92A8; font-size: 9px; font-weight: 600;")
+        self.lbl_time.hide()
+        layout.addWidget(self.lbl_time)
+
+    def set_state(self, level, is_charging, is_memorized=False, is_in_case=False, animate=False, force_blank=False, time_remaining=None):
         effective_level = level
         if not force_blank and effective_level is None and self.is_case:
             saved = settings.get("last_case_battery", 95)
             if saved:
                 effective_level = saved
                 is_memorized = True
+
+        if time_remaining and effective_level is not None and effective_level > 0:
+            self.lbl_time.setText(time_remaining)
+            self.lbl_time.show()
+        else:
+            self.lbl_time.setText("")
+            self.lbl_time.hide()
 
         if is_in_case:
             self.setStyleSheet("""
@@ -378,7 +391,11 @@ class BudoraPopupWindow(QWidget):
                 self.card_headphone.title_base = "Headphones"
             lvl = state.left_battery or state.right_battery
             chg = state.is_left_charging or state.is_right_charging
-            self.card_headphone.set_state(lvl, chg, force_blank=(lvl is None and not state.is_connected))
+            self.card_headphone.set_state(
+                lvl, chg,
+                force_blank=(lvl is None and not state.is_connected),
+                time_remaining=state.single_time_remaining
+            )
             if state.is_connected and lvl is None:
                 self.card_headphone.lbl_text.setText(self.card_headphone.title_base)
                 self.card_headphone.lbl_pct.setText("--")
@@ -388,8 +405,16 @@ class BudoraPopupWindow(QWidget):
             self.card_left.show()
             self.card_case.show()
             self.card_right.show()
-            self.card_left.set_state(state.left_battery, state.is_left_charging, is_in_case=state.is_left_in_case)
-            self.card_right.set_state(state.right_battery, state.is_right_charging, is_in_case=state.is_right_in_case)
+            self.card_left.set_state(
+                state.left_battery, state.is_left_charging,
+                is_in_case=state.is_left_in_case,
+                time_remaining=state.left_time_remaining
+            )
+            self.card_right.set_state(
+                state.right_battery, state.is_right_charging,
+                is_in_case=state.is_right_in_case,
+                time_remaining=state.right_time_remaining
+            )
 
             effective_case = state.case_battery
             is_mem = state.case_is_memorized
