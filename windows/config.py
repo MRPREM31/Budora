@@ -1,9 +1,18 @@
 import json
 import os
 import shutil
+import sys
 
-CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.json")
-CUSTOM_LOGO_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "custom_logo.png")
+if getattr(sys, "frozen", False):
+    EXE_DIR = os.path.dirname(sys.executable)
+    BUNDLE_DIR = getattr(sys, "_MEIPASS", EXE_DIR)
+else:
+    EXE_DIR = os.path.dirname(os.path.abspath(__file__))
+    BUNDLE_DIR = EXE_DIR
+
+CONFIG_PATH = os.path.join(EXE_DIR, "settings.json")
+CUSTOM_LOGO_FILE = os.path.join(EXE_DIR, "custom_logo.png")
+DEFAULT_LOGO_FILE = os.path.join(BUNDLE_DIR, "custom_logo.png")
 
 # Exact palettes from Budora Android app (Palettes.kt)
 THEMES = {
@@ -115,10 +124,16 @@ class AppSettings:
         return THEMES.get(theme_name, THEMES["Default"])
 
     def has_custom_logo(self) -> bool:
-        return os.path.exists(CUSTOM_LOGO_FILE) and os.path.getsize(CUSTOM_LOGO_FILE) > 0
+        if os.path.exists(CUSTOM_LOGO_FILE) and os.path.getsize(CUSTOM_LOGO_FILE) > 0:
+            return True
+        return os.path.exists(DEFAULT_LOGO_FILE) and os.path.getsize(DEFAULT_LOGO_FILE) > 0
 
     def get_custom_logo_path(self):
-        return CUSTOM_LOGO_FILE if self.has_custom_logo() else None
+        if os.path.exists(CUSTOM_LOGO_FILE) and os.path.getsize(CUSTOM_LOGO_FILE) > 0:
+            return CUSTOM_LOGO_FILE
+        if os.path.exists(DEFAULT_LOGO_FILE) and os.path.getsize(DEFAULT_LOGO_FILE) > 0:
+            return DEFAULT_LOGO_FILE
+        return None
 
     def save_custom_logo(self, source_path: str):
         try:

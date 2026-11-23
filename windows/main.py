@@ -32,7 +32,8 @@ def main():
         sys.exit(0)
 
     # 2. Setup Icon
-    icon_path = os.path.join(os.path.dirname(__file__), "icon.ico")
+    base_dir = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    icon_path = os.path.join(base_dir, "icon.ico")
     if os.path.exists(icon_path):
         app.setWindowIcon(QIcon(icon_path))
 
