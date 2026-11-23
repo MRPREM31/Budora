@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       # The ubuntu-latest image ships the Android SDK with licences accepted;
       # AGP downloads any missing platform / build-tools itself.

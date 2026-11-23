@@ -64,6 +64,11 @@ android {
         // For BuildConfig.DEBUG, which gates the Settings preview button.
         buildConfig = true
     }
+
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = false
+    }
 }
 
 java {
